@@ -40,6 +40,7 @@ const allowedOrigins = [
   process.env.FRONT_END_URL,
   process.env.CLIENT_ORIGIN,
   process.env.ALT_CLIENT_ORIGIN,
+  "http://192.168.0.133:5173/",
   "https://cute-travesseiro-ed1424.netlify.app",
 ];
 
