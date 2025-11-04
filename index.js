@@ -25,7 +25,6 @@ const __dirname = path.dirname(__filename);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-
 const databaseURL = process.env.DATABASE_URL;
 
 // app.use(
@@ -41,7 +40,6 @@ const allowedOrigins = [
   process.env.FRONT_END_URL,
   process.env.CLIENT_ORIGIN,
   process.env.ALT_CLIENT_ORIGIN,
-  "http://192.168.0.133:5173",
 ];
 
 console.log("✅ Allowed Origins:", allowedOrigins);
