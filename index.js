@@ -25,7 +25,7 @@ const __dirname = path.dirname(__filename);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-const port = process.env.PORT;
+
 const databaseURL = process.env.DATABASE_URL;
 
 // app.use(
@@ -61,10 +61,11 @@ app.use("/api", VideoRoute);
 app.use("/api", ContactRoute);
 app.use("/api", HomeImgRoute);
 
-const HOST = "192.168.0.133";
+const PORT = process.env.PORT || 8008;
+const HOST = "0.0.0.0"; // required for Render visibility
 
-const server = app.listen(port, HOST, () => {
-  console.log(`server is running on port  http://localhost:${port}`);
+app.listen(PORT, HOST, () => {
+  console.log(`✅ Server running and listening on http://${HOST}:${PORT}`);
 });
 
 app.get("/", async (req, res) => {
