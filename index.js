@@ -69,7 +69,7 @@ app.listen(PORT, HOST, () => {
 });
 
 app.get("/", async (req, res) => {
-  res.send("<h1>HII THERE IM SERVER WELCOME TO BAJANI APP</h1>");
+  res.send("<h1>HII THERE IM SERVER WELCOME TO GEMINI APP</h1>");
 });
 
 mongoose
