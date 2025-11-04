@@ -40,6 +40,7 @@ const allowedOrigins = [
   process.env.FRONT_END_URL,
   process.env.CLIENT_ORIGIN,
   process.env.ALT_CLIENT_ORIGIN,
+  "https://cute-travesseiro-ed1424.netlify.app",
 ];
 
 console.log("✅ Allowed Origins:", allowedOrigins);
