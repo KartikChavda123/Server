@@ -46,7 +46,7 @@ const allowedOrigins = [
 
 console.log("✅ Allowed Origins:", allowedOrigins);
 
-app.use(
+app.use(  
   cors({
     origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],

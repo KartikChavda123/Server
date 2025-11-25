@@ -1,6 +1,6 @@
 import express from 'express'
 import { AddProduct, DeleteProduct, EditProduct, GetAllProduct, GetProductbyId } from '../Controllar/ProductControllar.js'
-import {  uploadProductImages } from '../Middleware/Multer.js';
+import { uploadProductImages } from '../Middleware/Multer.js';
 
 
 const ProductRoute = express.Router()
@@ -27,8 +27,8 @@ ProductRoute.put(
       next();
     });
   },
-  EditProduct                                                                                                             
-);                     
+  EditProduct
+);
 
 
 export default ProductRoute
