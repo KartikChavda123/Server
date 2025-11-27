@@ -43,7 +43,7 @@ const allowedOrigins = [
   process.env.ADMIN_PANEL_URL,
   process.env.PUBLIC_WEBSITE_URL,
 
-  // Render live admin panel
+  // Render live admin panel (The origin causing the error is already here)
   "https://admin-side-0wnj.onrender.com",
 
   // Netlify live website
@@ -60,8 +60,15 @@ app.use(
     origin: (origin, callback) => {
       if (!origin) return callback(null, true); // Allow Postman / server
 
+      // 1. Check explicit allowed origins
       if (allowedOrigins.includes(origin)) {
-        console.log("🟢 CORS Allow:", origin);
+        console.log("🟢 CORS Allow (Explicit):", origin);
+        return callback(null, true);
+      }
+
+      // 2. Add pattern match for deployment platforms (FIX for Render/Netlify)
+      if (origin.endsWith('.onrender.com') || origin.endsWith('.netlify.app')) {
+        console.log("🟢 CORS Allow (Pattern Match):", origin);
         return callback(null, true);
       }
 
@@ -73,9 +80,6 @@ app.use(
     credentials: true,
   })
 );
-
-// ⚠️ Removed invalid Express v5 wildcard causing crash
-// app.options("*", cors());
 
 // -------------------------
 // Middleware
