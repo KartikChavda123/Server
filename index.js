@@ -43,43 +43,46 @@ const allowedOrigins = [
   process.env.ADMIN_PANEL_URL,
   process.env.PUBLIC_WEBSITE_URL,
 
-  // Render live admin panel (The origin causing the error is already here)
   "https://admin-side-0wnj.onrender.com",
-
-  // Netlify live website
   "https://vocal-sunburst-c95dce.netlify.app",
 ].filter(Boolean);
 
 console.log("🔵 Allowed Origins:", allowedOrigins);
 
 // -------------------------
-// CORS (MUST BE FIRST)
+// CORS (UPDATED + FIXED)
 // -------------------------
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true); // Allow Postman / server
-
-      // 1. Check explicit allowed origins
-      if (allowedOrigins.includes(origin)) {
-        console.log("🟢 CORS Allow (Explicit):", origin);
+    origin: function (origin, callback) {
+      if (!origin) {
+        console.log("🟢 CORS: No origin (Postman / server)");
         return callback(null, true);
       }
 
-      // 2. Add pattern match for deployment platforms (FIX for Render/Netlify)
-      if (origin.endsWith('.onrender.com') || origin.endsWith('.netlify.app')) {
-        console.log("🟢 CORS Allow (Pattern Match):", origin);
+      if (allowedOrigins.includes(origin)) {
+        console.log("🟢 CORS Allow (List):", origin);
+        return callback(null, true);
+      }
+
+      if (/\.onrender\.com$/.test(origin) || /\.netlify\.app$/.test(origin)) {
+        console.log("🟢 CORS Allow (Pattern):", origin);
         return callback(null, true);
       }
 
       console.log("🔴 CORS Blocked:", origin);
-      return callback(new Error(`CORS blocked for origin: ${origin}`));
+      return callback(new Error(`Not allowed by CORS`));
     },
+    credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
   })
 );
+
+// 🔥 Handle OPTIONS preflight for all routes
+app.options("*", cors());
 
 // -------------------------
 // Middleware

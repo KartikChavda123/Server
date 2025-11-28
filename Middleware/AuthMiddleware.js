@@ -5,18 +5,18 @@ dotenv.config();
 
 export const generateToken = (res, user, message) => {
   try {
-    // Generate JWT
-    const token = jwt.sign({ userId: user?._id }, process?.env?.JWT_KEY, {
-      expiresIn: "7d",
+    const token = jwt.sign({ userId: user?._id }, process.env.JWT_KEY, {
+      expiresIn: "7d", // 7 days
     });
 
-    console.log("<<<<", process?.env?.JWT_KEY);
+    console.log("<<<<", process.env.JWT_KEY);
 
-    // Cookie Fix for Render Deployment
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,                // required on HTTPS (Render)
-      sameSite: "None",           // FIX: allow cross-origin cookies
+      // ✅ In production (Render), allow cross-site cookies
+      //    In dev, keep it relaxed so localhost works
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      secure: process.env.NODE_ENV === "production", // true on Render (https)
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
 
@@ -34,4 +34,3 @@ export const generateToken = (res, user, message) => {
     });
   }
 };
-
