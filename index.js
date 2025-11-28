@@ -44,7 +44,7 @@ const allowedOrigins = [
   process.env.PUBLIC_WEBSITE_URL,
 
   "https://admin-side-0wnj.onrender.com",
-  "https://vocal-sunburst-c95dce.netlify.app",
+  "https://hilarious-entremet-93099a.netlify.app",
 ].filter(Boolean);
 
 console.log("🔵 Allowed Origins:", allowedOrigins);
